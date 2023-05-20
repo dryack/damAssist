@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DAM - Assist
 // @namespace    dekleinekobini.dam.assist
-// @version      2.13
+// @version      2.15
 // @description  Send an assist request to the DAM discord.
 // @author       DeKleineKobini [2114440] / lamashtu [2001015] ( >= 1.1 )
 // @match        https://www.torn.com/loader.php?sid=attack*
@@ -278,6 +278,11 @@ GM_addStyle(`
       font-family: fantasy;
       font-weight: 100;
     }
+    button#dam-assist-submit.disabled {
+      background-color: #cccccc;
+      color: #cccccc;
+      cursor: not-allowed;
+    }
     #dam-smk-btn-1 {
       line-height: normal;
       width: 4px;
@@ -388,34 +393,41 @@ GM_addStyle(`
     let wrapper2 = $("<div class='dam-tears'><span class='dam-text-tears'>Tears Needed: </span></div>").appendTo(requestContainer);
     const alertText = $("<span id='dam-message'></span>").appendTo(requestContainer);
     // assist button is initially hidden
-    const assistSubmitButton = $("<button id='dam-assist-submit' class='torn-btn btn___RxE8_ undefined silver'>Assist Me</button>").appendTo(submitContainer).click(function() {
-        $('.torn-btn.selected').removeClass('selected');
-        requestAssist();
-    }).hide();
+    let assistSubmitButton = $("<button id='dam-assist-submit' class='torn-btn btn___RxE8_ undefined silver disabled'>Assist Me</button>").appendTo(submitContainer).click(function() {
+    // if the button has the "disabled" class, do nothing when clicked
+    if ($(this).hasClass("disabled")) return;
+    $('.torn-btn.selected').removeClass('selected');
+    requestAssist();
+});
+
     let selectWrapper = $("<div></div>").appendTo(selectContainer);
 
 
     let lastClickedSmoke = null;
     let lastClickedTear = null;
     for (const amount of [1, 2, 3, 4, 5, 6, 7]) {
-        $(`<span id='dam-smk-btn-${amount}' class='torn-btn btn___RxE8_ undefined silver'>${amount}</span>`).appendTo(wrapper).click(function() {
-            if (lastClickedSmoke) {
-                lastClickedSmoke.removeClass('smk-selected');
-            }
-            $(this).toggleClass('smk-selected');
-            lastClickedSmoke = $(this);
-            updateSmokes(amount) });
-    }
-    $("<br>").appendTo(wrapper);
-    for (const amount of [1, 2, 3, 4, 5, 6, 7]) {``
-        $(`<span id='dam-tear-btn-${amount}' class='torn-btn btn___RxE8_ undefined silver'>${amount}</span>`).appendTo(wrapper2).click(function() {
-            if (lastClickedTear) {
-                lastClickedTear.removeClass('tear-selected');
-            }
-            $(this).toggleClass('tear-selected');
-            lastClickedTear = $(this);
-            updateTears(amount); });
-    }
+    $(`<span id='dam-smk-btn-${amount}' class='torn-btn btn___RxE8_ undefined silver'>${amount}</span>`).appendTo(wrapper).click(function() {
+        if (lastClickedSmoke) {
+            lastClickedSmoke.removeClass('smk-selected');
+        }
+        $(this).toggleClass('smk-selected');
+        lastClickedSmoke = $(this);
+        smokesNeeded = amount;
+        updateSmokes(amount);
+    });
+}
+$("<br>").appendTo(wrapper);
+for (const amount of [1, 2, 3, 4, 5, 6, 7]) {
+    $(`<span id='dam-tear-btn-${amount}' class='torn-btn btn___RxE8_ undefined silver'>${amount}</span>`).appendTo(wrapper2).click(function() {
+        if (lastClickedTear) {
+            lastClickedTear.removeClass('tear-selected');
+        }
+        $(this).toggleClass('tear-selected');
+        lastClickedTear = $(this);
+        tearsNeeded = amount;
+        updateTears(amount);
+    });
+}
 
     // Create the dropdown element
     const selectLabelElememnt = $("<label for='dam-select'>Seek Assists From:</label>").appendTo(selectWrapper);
@@ -491,32 +503,32 @@ GM_addStyle(`
     formElement.css("display", "none");
 
     function updateSmokes(amount) {
-        smokesNeeded = amount;
-        if (isValidSelection()) {
-            assistSubmitButton.show();
-        } else {
-            assistSubmitButton.hide();
-        }
+    smokesNeeded = amount;
+    if (isValidSelection()) {
+        assistSubmitButton.removeClass('disabled');
+    } else {
+        assistSubmitButton.addClass('disabled');
     }
+}
 
-    function updateTears(amount) {
-        tearsNeeded = amount;
-        if (isValidSelection()) {
-            assistSubmitButton.show();
-        } else {
-            assistSubmitButton.hide();
-        }
+function updateTears(amount) {
+    tearsNeeded = amount;
+    if (isValidSelection()) {
+        assistSubmitButton.removeClass('disabled');
+    } else {
+        assistSubmitButton.addClass('disabled');
     }
+}
 
     function isValidSelection() {
         return smokesNeeded > 0 || tearsNeeded > 0;
     }
 
-    let assistButton = document.querySelector("#dam-assist-submit"); // Replace with your button's selector
-    let assistButtonTimeout;
+    //let assistButton = document.querySelector("#dam-assist-submit"); // Replace with your button's selector
+    let assistSubmitButtonTimeout;
     function requestAssist() {
         if (smokesNeeded === 0 && tearsNeeded === 0) {return};
-        if (assistButtonTimeout) {
+        if (assistSubmitButtonTimeout) {
             return; // Exit function if timeout is active
         }
         let smkButtons = document.getElementsByClassName('smk-selected');
@@ -561,12 +573,12 @@ GM_addStyle(`
             onabort: () => setMessage("error", "Upon sending the data, the request was canceled.")
         });
         // Disable the button and set a timeout to enable it after 5 seconds
-        assistButton.disabled = true;
-        assistButtonTimeout = setTimeout(function() {
-            assistButton.disabled = false;
-            assistButtonTimeout = null; // Clear timeout
+        assistSubmitButton.addClass('disabled');
+        assistSubmitButtonTimeout = setTimeout(function() {
+            assistSubmitButton.removeClass('disabled');
+            assistSubmitButtonTimeout = null; // Clear timeout
         }, 5000); // Time is in milliseconds (5000 ms = 5 s)
-        assistSubmitButton.hide(); // Hide the button again after a request is made
+        //assistSubmitButton.hide(); // Hide the button again after a request is made
 
 
         // loop over all smkButtons and remove the class 'smk-selected'
