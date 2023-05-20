@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DAM - Assist
 // @namespace    dekleinekobini.dam.assist
-// @version      2.15
+// @version      2.16
 // @description  Send an assist request to the DAM discord.
 // @author       DeKleineKobini [2114440] / lamashtu [2001015] ( >= 1.1 )
 // @match        https://www.torn.com/loader.php?sid=attack*
@@ -26,6 +26,8 @@ let REQUEST_URL = getObject('DAM_assist_savedUrl');
 if (REQUEST_URL === null) {
     REQUEST_URL = REQUEST_URLS[DEFAULT_REQUEST_URL];
 }
+
+let assistSubmitButtonTimeout = null;
 
 function setObject(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
@@ -503,29 +505,28 @@ for (const amount of [1, 2, 3, 4, 5, 6, 7]) {
     formElement.css("display", "none");
 
     function updateSmokes(amount) {
-    smokesNeeded = amount;
-    if (isValidSelection()) {
-        assistSubmitButton.removeClass('disabled');
-    } else {
-        assistSubmitButton.addClass('disabled');
+      smokesNeeded = amount;
+      if (isValidSelection() && assistSubmitButtonTimeout === null) {
+          assistSubmitButton.removeClass('disabled');
+        } else {
+          assistSubmitButton.addClass('disabled');
+        }
     }
-}
 
 function updateTears(amount) {
     tearsNeeded = amount;
-    if (isValidSelection()) {
+    if (isValidSelection() && assistSumitButtonTimeout === null) {
         assistSubmitButton.removeClass('disabled');
-    } else {
+      } else {
         assistSubmitButton.addClass('disabled');
+      }
     }
-}
 
     function isValidSelection() {
         return smokesNeeded > 0 || tearsNeeded > 0;
     }
 
     //let assistButton = document.querySelector("#dam-assist-submit"); // Replace with your button's selector
-    let assistSubmitButtonTimeout;
     function requestAssist() {
         if (smokesNeeded === 0 && tearsNeeded === 0) {return};
         if (assistSubmitButtonTimeout) {
