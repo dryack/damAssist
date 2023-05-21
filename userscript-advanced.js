@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DAM - Assist
 // @namespace    dekleinekobini.dam.assist
-// @version      2.16
+// @version      2.17
 // @description  Send an assist request to the DAM discord.
 // @author       DeKleineKobini [2114440] / lamashtu [2001015] ( >= 1.1 )
 // @match        https://www.torn.com/loader.php?sid=attack*
