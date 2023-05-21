@@ -513,14 +513,14 @@ for (const amount of [1, 2, 3, 4, 5, 6, 7]) {
         }
     }
 
-function updateTears(amount) {
-    tearsNeeded = amount;
-    if (isValidSelection() && assistSumitButtonTimeout === null) {
-        assistSubmitButton.removeClass('disabled');
-      } else {
-        assistSubmitButton.addClass('disabled');
-      }
-    }
+    function updateTears(amount) {
+        tearsNeeded = amount;
+        if (isValidSelection() && assistSubmitButtonTimeout === null) {
+            assistSubmitButton.removeClass('disabled');
+          } else {
+            assistSubmitButton.addClass('disabled');
+          }
+        }
 
     function isValidSelection() {
         return smokesNeeded > 0 || tearsNeeded > 0;
