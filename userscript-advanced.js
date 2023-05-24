@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DAM - Assist
 // @namespace    dekleinekobini.dam.assist
-// @version      2.17
+// @version      2.18
 // @description  Send an assist request to the DAM discord.
 // @author       DeKleineKobini [2114440] / lamashtu [2001015] ( >= 1.1 )
 // @match        https://www.torn.com/loader.php?sid=attack*
@@ -153,7 +153,7 @@ GM_addStyle(`
         padding-right: 10%;
     }
     #dam-request-container {
-        margin-top: 12px;
+        margin-top: 2%;
         padding-right: 7%;
         padding-left: 0%;
     }
@@ -286,94 +286,106 @@ GM_addStyle(`
       cursor: not-allowed;
     }
     #dam-smk-btn-1 {
-      line-height: normal;
-      width: 4px;
-      text-align: center;
-    }
-    #dam-smk-btn-1 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-smk-btn-2 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-smk-btn-3 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-smk-btn-4 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-smk-btn-5 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-smk-btn-6 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-smk-btn-7 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-tear-btn-1 {
           line-height: normal;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-tear-btn-1 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-tear-btn-2 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-tear-btn-3 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-tear-btn-4 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-tear-btn-5 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-tear-btn-6 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
     #dam-tear-btn-7 {
           line-height: unset;
-          width: 4px;
+          width: auto;
           text-align: center;
+          height: auto;
         }
 
     .selected {
-      background: transparent linear-gradient(180deg,#CCCCCC 0%,#454669 60%,#666666 100%) 0 0 no-repeat
+      background: transparent linear-gradient(180deg,#CCCCCC 0%,#454669 60%,#666666 100%) 0 0 no-repeat;
     }
     .smk-selected {
-      background: transparent linear-gradient(180deg,#5ea121 0%,#104606 60%,#0ea712 100%) 0 0 no-repeat
+      background: transparent linear-gradient(180deg,#5ea121 0%,#104606 60%,#0ea712 100%) 0 0 no-repeat;
+      color: darkkhaki;
     }
     .tear-selected {
-      background: transparent linear-gradient(180deg,#1952a9 0%,#333462 60%,#98a3f1 100%) 0 0 no-repeat
+      background: transparent linear-gradient(180deg,#1952a9 0%,#333462 60%,#98a3f1 100%) 0 0 no-repeat;
+      color: darkkhaki;
     }
 `);
 
