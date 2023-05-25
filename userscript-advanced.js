@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DAM - Assist
 // @namespace    dekleinekobini.dam.assist
-// @version      2.18
+// @version      2.19
 // @description  Send an assist request to the DAM discord.
 // @author       DeKleineKobini [2114440] / lamashtu [2001015] ( >= 1.1 )
 // @match        https://www.torn.com/loader.php?sid=attack*
@@ -22,9 +22,13 @@ const REQUEST_URLS = storedUrls !== null ? storedUrls : {
 
 const DEFAULT_REQUEST_URL = '(Alliance) Ride or Die';
 
-let REQUEST_URL = getObject('DAM_assist_savedUrl');
-if (REQUEST_URL === null) {
+let REQUEST_URL;
+let storedUrl = getObject('DAM_assist_savedUrl');
+if (storedUrl === null) {
     REQUEST_URL = REQUEST_URLS[DEFAULT_REQUEST_URL];
+    setObject('DAM_assist_savedUrl', REQUEST_URL)
+} else {
+  REQUEST_URL = storedUrl
 }
 
 let assistSubmitButtonTimeout = null;
@@ -35,7 +39,12 @@ function setObject(key, value) {
 
 function getObject(key) {
     let value = localStorage.getItem(key);
-    return value && JSON.parse(value);
+    try {
+        return JSON.parse(value);
+    } catch (error) {
+        return null;
+    }
+    //return value && JSON.parse(value);
 }
 
 // Define a function to handle form submission
