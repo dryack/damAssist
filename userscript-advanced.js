@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DAM - Assist
 // @namespace    dekleinekobini.dam.assist
-// @version      2.19
+// @version      2.20
 // @description  Send an assist request to the DAM discord.
 // @author       DeKleineKobini [2114440] / lamashtu [2001015] ( >= 1.1 )
 // @match        https://www.torn.com/loader.php?sid=attack*
@@ -159,16 +159,16 @@ GM_addStyle(`
 
     #dam-select-container {
         margin-top: 3%;
-        padding-right: 10%;
+        padding-right: 2%;
     }
     #dam-request-container {
         margin-top: 2%;
         padding-right: 7%;
-        padding-left: 0%;
+        padding-left: 5%;
     }
     #dam-submit-container {
       padding-left: 0%;
-      padding-right: 20%;
+      padding-right: 14%;
       margin-top: 5%;
     }
     .dam-smokes {
