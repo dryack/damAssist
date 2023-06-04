@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DAM - Assist
 // @namespace    dekleinekobini.dam.assist
-// @version      2.20
+// @version      2.21
 // @description  Send an assist request to the DAM discord.
 // @author       DeKleineKobini [2114440] / lamashtu [2001015] ( >= 1.1 )
 // @match        https://www.torn.com/loader.php?sid=attack*
@@ -612,8 +612,8 @@ for (const amount of [1, 2, 3, 4, 5, 6, 7]) {
         for (let i = 0; i < tearButtons.length; i++) {
             tearButtons[i].classList.remove('tear-selected');
         }
-        //smokesNeeded = 0;
-        //tearsNeeded = 0;
+        smokesNeeded = 0;
+        tearsNeeded = 0;
     }
 
     function setMessage(type, message) {
