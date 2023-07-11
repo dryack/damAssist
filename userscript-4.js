@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DAM - Assist
 // @namespace    dekleinekobini.dam.assist
-// @version      4.0
+// @version      4.1
 // @description  Send an assist request to discord.
 // @author       DeKleineKobini [2114440] / lamashtu [2001015] ( >= 1.1 )
 // @match        https://www.torn.com/loader.php?sid=attack*
@@ -11,19 +11,19 @@
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
-// Check if REQUEST_URLS object exists in local storage
-const storedUrls = getObject('REQUEST_URLS');
-const REQUEST_URLS = storedUrls !== null ? storedUrls : {
+// Check if REQ_URL_STORAGE object exists in local storage
+const storedUrls = getObject('REQ_URL_STORAGE');
+const REQ_URL_STORAGE = storedUrls !== null ? storedUrls : {
     '(Alliance) Joint Operations': "http://wait-wtf.com:8399/assist"
 };
 
 const DEFAULT_REQUEST_URL = '(Alliance) Joint Operations';
 
 let REQUEST_URL;
-let storedUrl = getObject('DAM_assist_savedUrl');
+let storedUrl = getObject('ROD_assist_savedUrl');
 if (storedUrl === null) {
-    REQUEST_URL = REQUEST_URLS[DEFAULT_REQUEST_URL];
-    setObject('DAM_assist_savedUrl', REQUEST_URL)
+    REQUEST_URL = REQ_URL_STORAGE[DEFAULT_REQUEST_URL];
+    setObject('ROD_assist_savedUrl', REQUEST_URL)
 } else {
     REQUEST_URL = storedUrl
 }
@@ -64,11 +64,11 @@ function handleSubmit(selectElement) {
         const name = nameInput.value.trim();
         const url = urlInput.value.trim();
 
-        // Check if name is not empty and does not already exist in REQUEST_URLS
-        if (name !== "" && name !== null && name in REQUEST_URLS) {
-            // Update the url for an existing entry in REQUEST_URLS
-            REQUEST_URLS[name] = url;
-            setObject('REQUEST_URLS', REQUEST_URLS);
+        // Check if name is not empty and does not already exist in REQ_URL_STORAGE
+        if (name !== "" && name !== null && name in REQ_URL_STORAGE) {
+            // Update the url for an existing entry in REQ_URL_STORAGE
+            REQ_URL_STORAGE[name] = url;
+            setObject('REQ_URL_STORAGE', REQ_URL_STORAGE);
 
             // Update the dropdown menu with the new url for the existing entry
             const options = selectElement.find('option');
@@ -82,10 +82,10 @@ function handleSubmit(selectElement) {
             // Reset the form inputs
             nameInput.value = '';
             urlInput.value = '';
-        } else if (name !== "" && name !== null && !REQUEST_URLS.hasOwnProperty(name)) {
-            // Add a new entry to REQUEST_URLS
-            REQUEST_URLS[name] = url;
-            setObject('REQUEST_URLS', REQUEST_URLS);
+        } else if (name !== "" && name !== null && !REQ_URL_STORAGE.hasOwnProperty(name)) {
+            // Add a new entry to REQ_URL_STORAGE
+            REQ_URL_STORAGE[name] = url;
+            setObject('REQ_URL_STORAGE', REQ_URL_STORAGE);
 
             // Add the new entry to the dropdown menu
             const option = $("<option></option>").attr("value", url).text(name);
@@ -446,19 +446,19 @@ GM_addStyle(`
     const selectElement = $("<select id='dam-select'></select>").appendTo(selectWrapper);
 
 
-    for (const [key, value] of Object.entries(REQUEST_URLS)) {
+    for (const [key, value] of Object.entries(REQ_URL_STORAGE)) {
         const option = $("<option></option>").attr("value", key).text(key);
         if (value === REQUEST_URL) {
             option.attr("selected", true);
-            setObject('DAM_assist_savedUrl', REQUEST_URL)
+            setObject('ROD_assist_savedUrl', REQUEST_URL)
         }
         selectElement.append(option);
     }
 
     selectElement.change(() => {
         // Update the REQUEST_URL when the user selects a different option
-        const REQUEST_URL = REQUEST_URLS[selectElement.val()];
-        setObject('DAM_assist_savedUrl', REQUEST_URL)
+        const REQUEST_URL = REQ_URL_STORAGE[selectElement.val()];
+        setObject('ROD_assist_savedUrl', REQUEST_URL)
     });
 
 
@@ -487,7 +487,7 @@ GM_addStyle(`
     $("<br>").appendTo(formElement);
 
     // Add an option for each saved URL fpr the list of assist server to delete
-    for (const name in REQUEST_URLS) {
+    for (const name in REQ_URL_STORAGE) {
         const option = $("<option></option>").attr("value", name).text(name);
         delSelectElement.append(option);
     }
@@ -496,11 +496,11 @@ GM_addStyle(`
         // Get the name of the URL to delete
         const selectedName = delSelectElement.val();
 
-        // Remove the URL from the REQUEST_URLS object
-        delete REQUEST_URLS[selectedName];
+        // Remove the URL from the REQ_URL_STORAGE object
+        delete REQ_URL_STORAGE[selectedName];
 
-        // Update the REQUEST_URLS object in local storage
-        setObject('REQUEST_URLS', REQUEST_URLS);
+        // Update the REQ_URL_STORAGE object in local storage
+        setObject('REQ_URL_STORAGE', REQ_URL_STORAGE);
 
         // Remove the corresponding option from the select element
         delSelectElement.find(`option[value="${selectedName}"]`).remove();
@@ -556,7 +556,7 @@ GM_addStyle(`
         const requester = attackerName;
         const requesterFaction = attackerFaction;
         const requesterID = attackerID
-        const requestUrl = getObject('DAM_assist_savedUrl');
+        const requestUrl = getObject('ROD_assist_savedUrl');
         const uuid = uuidv4();
         const payload = JSON.stringify({target, targetID, targetFaction, smokesNeeded, tearsNeeded, requester, requesterID, requesterFaction, uuid});
         console.log(payload);
