@@ -17,7 +17,7 @@ const REQUEST_URLS = storedUrls !== null ? storedUrls : {
     '(Alliance) Joint Operations': "http://wait-wtf.com:8399/assist"
 };
 
-const DEFAULT_REQUEST_URL = '(Alliance) Ride or Die';
+const DEFAULT_REQUEST_URL = '(Alliance) Joint Operations';
 
 let REQUEST_URL;
 let storedUrl = getObject('DAM_assist_savedUrl');
