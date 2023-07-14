@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         DAM - Assist
 // @namespace    dekleinekobini.dam.assist
-// @version      4.1
+// @version      4.2
 // @description  Send an assist request to discord.
 // @author       DeKleineKobini [2114440] / lamashtu [2001015] ( >= 1.1 )
 // @match        https://www.torn.com/loader.php?sid=attack*
-// @downloadURL https://github.com/dryack/damAssist/raw/main/userscript-4.js
-// @updateURL   https://github.com/dryack/damAssist/raw/main/userscript-4.js
+// @downloadURL  https://raw.githubusercontent.com/lamashtu17/rodAssist/main/rodAssist.user.js
+// @updateURL    https://raw.githubusercontent.com/lamashtu17/rodAssist/main/rodAssist.user.js
 // @grant        GM_addStyle
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
